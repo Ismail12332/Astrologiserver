@@ -15,6 +15,10 @@ import os
 
 load_dotenv()
 
+jwks_cache = None
+jwks_cache_time = None
+jwks_cache_ttl = 3600 # Глобальный кэш для JWKS  # Время жизни кэша в секундах (например, 1 час)
+
 def create_app():
     app = Flask(__name__, template_folder='templates')
     CORS(app, supports_credentials=True)
@@ -27,11 +31,6 @@ def create_app():
     AUTH0_DOMAIN = 'dev-whbba5qnfveb88fc.us.auth0.com'
     ALGORITHMS = ['RS256']
 
-
-    # Глобальный кэш для JWKS
-    jwks_cache = None
-    jwks_cache_time = None
-    jwks_cache_ttl = 3600  # Время жизни кэша в секундах (например, 1 час)
 
     def get_jwks():
         global jwks_cache, jwks_cache_time
